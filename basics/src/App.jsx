@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useRef} from 'react';
 import './App.css';
 
 
@@ -9,8 +9,37 @@ export default function App() {
   const [showLogin, setShowLogin] = useState(false); // State to manage login visibility
   const [username, setUsername] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showBrands, setShowBrands] = useState(false);
+  const brandsSectionRef = useRef(null);
+    
+  const scrollToBrandsSection = () => {
+    brandsSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+};
+    const toggleBrands = () => {
+        setShowBrands(!showBrands);
+    };
+    // State to manage which dropdown is open
 
-
+    const [openDropdown, setOpenDropdown] = useState("");
+    const handleAddToCart = (fruit) => {
+        window.alert(`${fruit.name} has been added to the cart!`);
+      };
+    // Ref for scrolling to the category buttons container
+    const categorySectionRef = useRef(null);
+  
+    // Function to scroll to the buttons container
+    const scrollToCategorySection = () => {
+      categorySectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+  
+    const handleDropdownClick = (category) => {
+      if (openDropdown === category) {
+        setOpenDropdown(""); // Close the dropdown if it's already open
+      } else {
+        setOpenDropdown(category); // Open the selected dropdown
+      }
+    };
+  
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -69,7 +98,7 @@ export default function App() {
               <h3>{fruit.name}</h3>
               <p>{fruit.description}</p>
               <p><strong>Price:</strong> {fruit.price}</p> {/* Displaying the price here */}
-              <button >Add to Cart</button>
+              <button  onClick={() => handleAddToCart(fruit)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -96,7 +125,7 @@ export default function App() {
               <h3>{vegetable.name}</h3>
               <p>{vegetable.description}</p>
               <p><strong>Price:</strong> {vegetable.price}</p>
-              <button >Add to Cart</button>
+              <button onClick={() => handleAddToCart(vegetable)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -123,7 +152,7 @@ export default function App() {
               <h3>{snack.name}</h3>
               <p>{snack.description}</p>
               <p><strong>Price:</strong> {snack.price}</p>
-              <button >Add to Cart</button>
+              <button onClick={() => handleAddToCart(snack)} >Add to Cart</button>
             </div>
           ))}
         </div>
@@ -153,7 +182,7 @@ export default function App() {
               <h3>{tea.name}</h3>
               <p>{tea.description}</p>
               <p><strong>Price:</strong> {tea.price}</p>
-              <button >Add to Cart</button>
+              <button onClick={() => handleAddToCart(tea)} >Add to Cart</button>
             </div>
           ))}
         </div>
@@ -166,11 +195,11 @@ export default function App() {
   // Load Organic Coffee Page
   const loadOrganicCoffeePage = () => {
     const coffees = [
-      { name: 'Arabica Coffee', description: 'Premium Arabica coffee beans', price: '300/500gms', image: 'https://m.media-amazon.com/images/I/71zaRn1IICL.AC_UL480_FMwebp_QL65.jpg' },
-      { name: 'Robusta Coffee', description: 'Strong and flavorful Robusta beans', price: '280/500gms', image: 'https://m.media-amazon.com/images/I/5177Lvx28vL.AC_UL480_FMwebp_QL65.jpg' },
-      { name: 'Espresso Blend', description: 'Rich espresso blend coffee', price: '350/500gms', image: 'https://m.media-amazon.com/images/I/61+craWrYJL.AC_UL480_FMwebp_QL65.jpg' },
-      { name: 'Cold Brew Coffee', description: 'Smooth cold brew coffee', price: '320/500gms', image: 'https://m.media-amazon.com/images/I/71LPJi2AqSL.AC_UL480_FMwebp_QL65.jpg' },
-    ];
+      { name: 'Arabica Coffee', description: '100% Arabica,black coffee', price: '300/500gms', image: 'https://healthybuddha.in/image/cache/catalog/13669681_939424062834536_9024468127416569701_n-500x515.jpg' },
+      { name: 'Wanderoos', description: 'Organic FaitTrade Instant Coffee', price: '280/500gms', image: 'http://ecx.images-amazon.com/images/I/61Lxghd0VOL.jpg' },
+      { name: 'Camerons', description: 'Organic French Roast', price: '350/500gms', image: 'https://images-na.ssl-images-amazon.com/images/I/71tqWCbpuaL.jpg' },
+      { name: 'Two Volcanoes', description: '100% Guatemalan Whole Bean', price: '320/500gms', image: 'https://images-na.ssl-images-amazon.com/images/I/81N022I60CL.SL1497.jpg' },
+    ];
      
      
 
@@ -184,7 +213,7 @@ export default function App() {
               <h3>{coffee.name}</h3>
               <p>{coffee.description}</p>
               <p><strong>Price:</strong> {coffee.price}</p>
-              <button >Add to Cart</button>
+              <button onClick={() => handleAddToCart(coffee)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -197,11 +226,11 @@ export default function App() {
   // Load Organic Drinks Page
   const loadOrganicDrinksPage = () => {
     const drinks = [
-      { name: 'Lemonade', description: 'Freshly squeezed lemonade', price: '100/bottle', image: 'https://m.media-amazon.com/images/I/81s660iGfDL.AC_UL480_FMwebp_QL65.jpg' },
-      { name: 'Apple Juice', description: 'Organic apple juice', price: '120/bottle', image: 'https://m.media-amazon.com/images/I/81+Phc5OQYS.AC_UL480_FMwebp_QL65.jpg' },
-      { name: 'Berry Smoothie', description: 'Mixed berry smoothie', price: '150/bottle', image: 'https://m.media-amazon.com/images/I/81vaeLT6DjL.AC_UL480_FMwebp_QL65.jpg' },
-      { name: 'Mango Lassi', description: 'Creamy mango lassi', price: '140/bottle', image: 'https://m.media-amazon.com/images/I/51vv1sJ48-L.AC_UL480_FMwebp_QL65.jpg' },
-    ];
+      { name: 'Lemonade', description: 'Freshly Pressed Lemons', price: '100/bottle', image: 'https://images-na.ssl-images-amazon.com/images/I/61Di2A2ZBuL.SL1500.jpg' },
+      { name: 'Apple Juice', description: 'Organic apple juice', price: '120/bottle', image: 'https://northcoast.organic/wp-content/uploads/2016/09/north-coast-organic-apple-juice-32-oz.jpg' },
+      { name: 'Berry Smoothie', description: 'Mixed berry smoothie', price: '150/bottle', image: 'https://d2d8wwwkmhfcva.cloudfront.net/800x/d2lnr5mha7bycj.cloudfront.net/product-image/file/large_9fd5e61e-2e88-46a3-81ab-c989355b7251.jpeg' },
+      { name: 'Mango Lassi', description: 'Creamy mango lassi', price: '140/bottle', image: 'https://i.pinimg.com/originals/bf/17/58/bf1758d0fbaf171a5a69f3b79a708ff4.png' },
+    ];
 
     const drinksPage = (
       <div className="drinks-page">
@@ -213,7 +242,7 @@ export default function App() {
               <h3>{drink.name}</h3>
               <p>{drink.description}</p>
               <p><strong>Price:</strong> {drink.price}</p>
-              <button >Add to Cart</button>
+              <button onClick={() => handleAddToCart(drink)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -242,7 +271,7 @@ export default function App() {
               <h3>{CleaningProducts.name}</h3>
               <p>{CleaningProducts.description}</p>
               <p><strong>Price:</strong> {CleaningProducts.price}</p> {/* Displaying the price here */}
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(CleaningProducts)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -269,7 +298,7 @@ export default function App() {
               <h3>{KitchenWrap.name}</h3>
               <p>{KitchenWrap.description}</p>
               <p><strong>Price:</strong> {KitchenWrap.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(KitchenWrap)}>Add to Cart</button>
             </div>
          
         ))}
@@ -297,7 +326,7 @@ export default function App() {
                 <h3>{Utensil.name}</h3>
                 <p>{Utensil.description}</p>
                 <p><strong>Price:</strong> {Utensil.price}</p>
-                <button>Add to Cart</button>
+                <button onClick={() => handleAddToCart(Utensil)}>Add to Cart</button>
               </div>
             ))}
           </div>
@@ -309,12 +338,12 @@ export default function App() {
     
     // PERSONAL CARE
     const loadShampooPage = () => {
-      const shampooProducts = [
-        { name: 'Organic Shampoo', description: 'Made from natural ingredients', price: '500/ml', image: 'https://m.media-amazon.com/images/I/71Q8d1jIMJL.AC_UL480_FMwebp_QL65.jpg' }, 
-        { name: 'Organic Conditioner', description: 'Nourishing conditioner for all hair types', price: '600/ml', image: 'https://m.media-amazon.com/images/I/71UuOfJFM4L.AC_UL480_FMwebp_QL65.jpg' }, 
-        { name: 'Herbal Shampoo', description: 'Herbal blend for healthy hair', price: '550/ml', image: 'https://m.media-amazon.com/images/I/7145n0T0axL.AC_UL480_FMwebp_QL65.jpg' }, 
-        { name: 'Anti-Dandruff Shampoo', description: 'Effective anti-dandruff solution', price: '580/ml', image: 'https://m.media-amazon.com/images/I/71wjy1+CQGL.AC_UL480_FMwebp_QL65.jpg'}
-      ];
+        const shampooProducts = [
+          { name: 'Organic Shampoo', description: 'Made from natural ingredients', price: '500/ml', image: 'https://m.media-amazon.com/images/I/71Q8d1jIMJL.AC_UL480_FMwebp_QL65.jpg' }, 
+          { name: 'Organic Conditioner', description: 'Nourishing conditioner for all hair types', price: '600/ml', image: 'https://m.media-amazon.com/images/I/71UuOfJFM4L.AC_UL480_FMwebp_QL65.jpg' }, 
+          { name: 'Herbal Shampoo', description: 'Herbal blend for healthy hair', price: '550/ml', image: 'https://m.media-amazon.com/images/I/7145n0T0axL.AC_UL480_FMwebp_QL65.jpg' }, 
+          { name: 'Anti-Dandruff Shampoo', description: 'Effective anti-dandruff solution', price: '580/ml', image: 'https://3.imimg.com/data3/GB/KY/MY-463095/anti-dandruff-shampoo-500x500.jpg'}
+        ];
   
       const shampooPage = (
         <div className="personal-care-page">
@@ -326,7 +355,7 @@ export default function App() {
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p><strong>Price:</strong> {product.price}</p>
-                <button>Add to Cart</button>
+                <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
               </div>
             ))}
           </div>
@@ -354,7 +383,7 @@ export default function App() {
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p><strong>Price:</strong> {product.price}</p>
-                <button>Add to Cart</button>
+                <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
               </div>
             ))}
           </div>
@@ -365,12 +394,12 @@ export default function App() {
     };
   
     const loadBodyLotionPage = () => {
-      const bodyLotionProducts = [
-        { name: 'Cocoa Butter Lotion', description: 'Rich cocoa butter lotion', price: '350/ml', image: 'https://m.media-amazon.com/images/I/81rkTNVm0OL.AC_UL480_FMwebp_QL65.jpg' }, 
-        { name: 'Aloe Vera Lotion', description: 'Soothing aloe vera lotion', price: '300/ml', image: 'https://m.media-amazon.com/images/I/71P1qO3ormL.AC_UL480_FMwebp_QL65.jpg' },
-        { name: 'Shea Butter Lotion', description: 'Nourishing shea butter lotion', price: '400/ml', image: 'https://m.media-amazon.com/images/I/61EBYfuVD1L.AC_UL480_FMwebp_QL65.jpg' }, 
-        { name: 'Moisturizing Lotion', description: 'Hydrating lotion for all skin types', price: '350/ml', image: 'https://m.media-amazon.com/images/I/71etIFqlwCL.AC_UL480_FMwebp_QL65.jpg' } 
-      ];
+        const bodyLotionProducts = [
+          { name: 'NaturoPathica', description: '100% natural gulten-free', price: '350/ml', image: 'https://skincareox.com/wp-content/uploads/2018/05/naturopathica-_-silician-bergamot-organic-body-lotion-min.jpg' }, 
+          { name: 'Aloe Vera Lotion', description: 'Soothing aloe vera lotion', price: '300/ml', image: 'https://m.media-amazon.com/images/I/71P1qO3ormL.AC_UL480_FMwebp_QL65.jpg' },
+          { name: 'Shea Butter Lotion', description: 'Nourishing shea butter lotion', price: '400/ml', image: 'https://www.healthybeing.com.au/assets/full/UH-AP03.jpg?20181116115411' }, 
+          { name: 'Moisturizing Lotion', description: 'Hydrating lotion for all skin types', price: '350/ml', image: 'http://labdelon.com/wp-content/uploads/2018/01/delon-organic-now-lotion-325ml.jpg' } 
+        ];
   
       const bodyLotionPage = (
         <div className="personal-care-page">
@@ -382,7 +411,7 @@ export default function App() {
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <p><strong>Price:</strong> {product.price}</p>
-                <button>Add to Cart</button>
+                <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
               </div>
             ))}
           </div>
@@ -415,7 +444,7 @@ export default function App() {
               <h3>{item.name}</h3>
               <p>{item.description}</p>
               <p><strong>Price:</strong> {item.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -444,7 +473,7 @@ export default function App() {
               <h3>{item.name}</h3>
               <p>{item.description}</p>
               <p><strong>Price:</strong> {item.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -473,7 +502,7 @@ export default function App() {
               <h3>{item.name}</h3>
               <p>{item.description}</p>
               <p><strong>Price:</strong> {item.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -505,7 +534,7 @@ export default function App() {
               <h3>{item.name}</h3>
               <p>{item.description}</p>
               <p><strong>Price:</strong> {item.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -534,7 +563,7 @@ export default function App() {
               <h3>{item.name}</h3>
               <p>{item.description}</p>
               <p><strong>Price:</strong> {item.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -563,7 +592,7 @@ export default function App() {
               <h3>{item.name}</h3>
               <p>{item.description}</p>
               <p><strong>Price:</strong> {item.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -593,7 +622,7 @@ export default function App() {
               <h3>{pot.name}</h3>
               <p>{pot.description}</p>
               <p><strong>Price:</strong> {pot.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(pot)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -621,7 +650,7 @@ export default function App() {
               <h3>{tool.name}</h3>
               <p>{tool.description}</p>
               <p><strong>Price:</strong> {tool.price}</p>
-              <button>Add to Cart</button>
+              <button> onClick={() => handleAddToCart(tool)}Add to Cart</button>
             </div>
           ))}
         </div>
@@ -649,7 +678,7 @@ export default function App() {
               <h3>{seed.name}</h3>
               <p>{seed.description}</p>
               <p><strong>Price:</strong> {seed.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(seed)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -677,7 +706,7 @@ export default function App() {
               <h3>{fertilizer.name}</h3>
               <p>{fertilizer.description}</p>
               <p><strong>Price:</strong> {fertilizer.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={() => handleAddToCart(fertilizer)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -697,20 +726,19 @@ export default function App() {
               <li><button onClick={toggleModal}>
                 About Us
               </button></li>
-              <li><button>Products</button></li>
-              <li><button>Recieps</button></li>
-              <li><button>AI</button></li>
+              <li>< button onClick={scrollToCategorySection}>Products</button></li>
+              <li><button onClick={scrollToBrandsSection}>Brands</button></li>
             </ul>
             <div className="search-login">
               <input type="text" className="search" placeholder="Search..." />
+              <button class="cartb">cart</button>
               <button onClick={() => setShowLogin(!showLogin)}>Log In</button>
               <img  className="logo"src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpTtzcm85JC7PdX-cKdnj2ZPnnzhNGSnHtd6jEh0-rRJmYfOa_2bTmlha_sN5xB-r3h0I&usqp=CAU" alt="nope" width="70px" height="70px" />
             </div>
           </nav>
           {username && <p>Welcome, {username}!</p>}
         </header>
-
-      
+      <main>
         {isModalOpen && (
       <div className="modal-overlay" onClick={toggleModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -729,14 +757,16 @@ export default function App() {
             </div>
         </div>
       )}
+    
 
-      <section className="hero" >
-        <img 
-          src="https://www.premiumbionaturals.com/cdn/shop/articles/eco.png?v=1711820134&width=1100 " 
-          alt="Hero Section" 
-          className="hero-image"
-        />
-      </section>
+<section className="hero">
+    <img 
+        src="https://www.premiumbionaturals.com/cdn/shop/articles/eco.png?v=1711820134&width=1100" 
+        alt="Hero Section" 
+        className="hero-image"
+    />
+</section>
+
 {/* Display username if logged in */}
 
       
@@ -766,7 +796,7 @@ export default function App() {
           </div>
         )} 
       {/* Category Buttons */}
-      <section className="category-buttons">
+      <section className="category-buttons" ref={categorySectionRef}>
         <h2>Explore Our Sustainable Products</h2>
         <div className="button-container">
           {/* Food Button with Dropdown */}
@@ -867,13 +897,26 @@ export default function App() {
         </div>
     
       </section>
-
+      </main>
+      <section className="brands-section" ref={brandsSectionRef}>
+                <h2>Partnered With</h2>
+                <div className="brands-container">
+                <img src="https://fssai.gov.in/upload/uploadfiles/images/Jaivik_Bharat.png" alt="Brand 1" />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-vBSX-mABSRVHnEPgzlMk8xwvRbnES6sMSw&s" alt="Brand 2" />
+                        <img src="https://www.shutterstock.com/image-vector/organic-vegetarian-healthy-food-logo-260nw-770613697.jpg" alt="Brand 3" />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbs7E-Taaq98AkHa5T-z-CaYSHSNhPf7h2Xg&s" alt="Brand 4" />
+                        <img src="https://yt3.googleusercontent.com/ytc/AIdro_mt0shWq4GUO0qXHAEIB7d8jHBmodvMs_NM7pFAOPozBQ=s900-c-k-c0x00ffffff-no-rj" alt="Brand 5" />
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9j-Db7_WuvMD18a50rqJ9V7h0UN_SYmYpmg&s" alt="Brand 6" />
+                        <img src="https://www.logodesignteam.com/images/portfolio-images/furniture-logo-design/furniture-logo-design-new9.jpg" alt="Brand 7" />
+                        {/* Add more brand images as needed */}
+                </div>
+            </section>
 
       {/* Footer */}
       <footer className="footer">
         <div className="contact">
           <p>Contact Us</p>
-          <p>Email: support@organicproducts.com</p>
+          <p>Email: support@econest.com</p>
           <p>Phone: +91 9823451088</p>
         </div>
         <div className="copyright">
@@ -883,3 +926,4 @@ export default function App() {
     </div>
   );
 }
+
